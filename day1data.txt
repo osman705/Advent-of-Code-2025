@@ -1,4 +1,4 @@
-data = """R32
+R32
 R2
 R4
 R1
@@ -4405,39 +4405,8 @@ L18
 R22
 L23
 L2
-R40"""
+R40
 
-
-
-def parse_instruction(instruction):
-    """Extract direction and steps from instruction string like 'R25'"""
-    direction = instruction[0]
-    steps = int(instruction[1:])
-    return direction, steps
-
-
-def move_dial(current_position, direction, steps):
-    """Calculate new position after moving in given direction"""
-    if direction == 'R':
-        return (current_position + steps) % 100
-    else:  # direction == 'L'
-        return (current_position - steps) % 100
-
-
-def count_zero_visits(instructions, starting_position=50):
-    """Count how many times we land on 0 following all instructions"""
-    current_position = starting_position
-    zero_count = 0
-    
-    for instruction in instructions:
-        direction, steps = parse_instruction(instruction)
-        current_position = move_dial(current_position, direction, steps)
-        
-        if current_position == 0:
-            zero_count += 1
-    
-    return zero_count
-    
 
 
 
