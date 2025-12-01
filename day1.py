@@ -4408,34 +4408,41 @@ L2
 R40"""
 
 
-"""
 
-TASK
+STARTING_position = 50
+number_of_0_occurences = 0
 
-We want to start at position 50, we have a list of instructions which
-move left or right by a certain amount. E.g starting at 50: L25 = positon 25
-R25 = positon 75.
-
-If we go left from 0 we rotate back to position 99 and rotating right from 99
-moves back to 0.
-
-We want to count how many times we arrive back to 0 after following the sequnces
-of instructions.
-
-"""
-
-STARTING_POSITION = 50
-Number_of_0_occurences = 0
-
-list_of_positons = [x for x in range(0,100)] #List of values that the lock can be
+list_of_positions = [] #List of values that the lock should be in
 
 list_of_instructions = data.strip().split("\n")
 
+current_positon = STARTING_position
+
+
 for instruction in list_of_instructions:
-    direction = instruction[0]
-    steps_moved = instruction[1:]
-    print(f"Direction:{direction}, amount moved: {steps_moved}")
+    direction = instruction[0] # Direction (Should be 'L/R')
+    steps_moved = int(instruction[1:]) #Rest of the statement should be a number e.g 45
+    #print(f"Direction:{direction}, amount moved: {steps_moved}")
+    
 
+    if direction == 'R':
+        
+    #What would the next step be?
+    #new_position + the next insturction which is current position + the new steps moved
+    
+        new_position = (current_positon + steps_moved ) % 100
+    else:
+        new_positon = (current_positon - steps_moved) % 100
 
+    list_of_positions.append(new_positon)
+    
+    if new_positon == 0:
+        number_of_0_occurences += 1
 
+    current_position = new_positon 
 
+    #print(f"Direction:{direction} , steps_moved:{steps_moved},current positon:{current_position}")
+
+print(number_of_0_occurences)
+    
+    
