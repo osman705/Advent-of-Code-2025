@@ -1,5 +1,3 @@
-Solutions will be in:
+Solutions will be in Python for this AOC. 
 
-- Python
-
-A file upload: An attempt will be made to find a solution optimised for space & time complexity upon completion of the initial solution. 
+An attempt will be made to find a solution optimised for space & time complexity upon completion of the initial solution. 
