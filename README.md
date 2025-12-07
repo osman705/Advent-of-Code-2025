@@ -6,7 +6,6 @@ Created by Eric Wastl, Advent of Code is a fantastic opportunity to learn and ch
 
 ## Structure
 
-- 📅 **One directory per day:** Each folder contains my solutions for that day's puzzle.
 - 📝 **Write-ups:** Some days may include notes or alternative approaches for optimisation.
-- 🛠️ **Languages:** Solutions may vary by language (often Python, JavaScript, or others).
+- 🛠️ **Language:** Solutions for this year will be written in Python.
 - 🧪 **Tests:** Some days include unit tests/examples.
