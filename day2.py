@@ -8,9 +8,7 @@ with open ("day2-datafile.txt") as file:
 #print(data)
 
 
-
-
-test_data = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862"
+test_data = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"
 
 # Adding up all invalid IDs should produce 1227775554 if the test case works correctly
 
@@ -19,6 +17,8 @@ test_data = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1
 #The job is to find all of the invalid IDs that appear in the given ranges.
 # You can find the invalid IDs by looking for any ID which is made only of some sequence of digits repeated twice. 
 # So, 55 (5 twice), 6464 (64 twice), and 123123 (123 twice) would all be invalid IDs. 
+
+
 
 
 def split_id(data):
@@ -40,6 +40,8 @@ def split_id(data):
     return list_of_id_components
 
 
+
+
 def better_split_id(data):
     """
     Same functionality as split_id - more pythonic a as a list comprehension. 
@@ -54,17 +56,24 @@ def better_split_id(data):
     return  [id.partition("-") for id in data.split(",")]
 
 
-"""
-Steps i'm thinking currently:
 
-Use pytest for this function with asserts for practise.
-1) split data by commas to get seperate IDs - Done
-2) find a way to read the individual lines up until the - seperatator to retrieve my first value, everything after the comma is my second value - Done
-3) Check if the first or second value starts with 0 if not then: - Done
-4) range through all values in the starting first value up to second value + 1
-5) How would I check for a repeated digit? What if the first half of each string = second half of each string?  e.g 555555 = true , 556557 = false. 77777777 true, 666777 false
- 
-"""
+def has_repeated_pattern_twice(value_str):
+    """Check if value_str is made of a pattern repeated at least twice"""
+    
+    length_str = len(value_str)
+
+    # Check all possible pattern lengths from 1 to length //2
+    for pattern_length in range(1, (length_str // 2) + 1):
+        if length_str % pattern_length == 0:  # Pattern length divides evenly
+            pattern = value_str[:pattern_length]
+            repetitions = length_str // pattern_length
+            
+            # Does repeating this pattern recreate the full string?
+            if pattern * repetitions == value_str:
+                return True # Found a repeated pattern
+    
+    return False  # No repeated pattern found
+    
 
 
 def check_repeated_digits(list_of_id_components):
@@ -76,7 +85,7 @@ def check_repeated_digits(list_of_id_components):
     """
     
     number_of_invalid_values = 0
-    list_of_invalids = [] 
+    list_of_invalids = []   
 
     for ids in list_of_id_components:
         if ids[0][0] == "0" or ids[2][0] == "0": # If the first character of the first digit string == "0" or the first character of the second digit string == "0" add it to the total invalid values 
@@ -84,22 +93,12 @@ def check_repeated_digits(list_of_id_components):
 
         else:
             for values in range(int(ids[0]),int(ids[2]) + 1):
-                str_values = str(values)
-                str_value_length = len(str(values))
-                mid_point = str_value_length // 2
-                
-                
-                if str_values[:mid_point] == str_values[mid_point:]: #Check if the first half and second half of the string are the same if so this is an invalid didgit
-                    number_of_invalid_values += 1
-                list_of_invalids.append(int(str_values))
-           
-    sum_of_correct_values = sum(list_of_invalids)
-                    
-                            
-    return sum_of_correct_values
+                if has_repeated_pattern_twice(str(values)):
+                    list_of_invalids.append(int(values))
+            
+    return(sum(list_of_invalids))
 
 
+print(check_repeated_digits(better_split_id(test_data)))
 
 
-#print(check_repeated_digits(better_split_id(data)))
-#print(split_id(test_data))
